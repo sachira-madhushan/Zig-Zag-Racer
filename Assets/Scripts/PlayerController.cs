@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using TMPro;
 public class PlayerController : MonoBehaviour
 {
 
@@ -8,34 +8,43 @@ public class PlayerController : MonoBehaviour
     bool movingLeft = true;
     private bool playing;
     bool firstInput = true;
-
+    public GameObject[] cars;
+    public AudioClip coin;
+    public AudioClip fail;
+    private AudioSource audioSource;
+    public TextMeshProUGUI coinText;
+    int coins = 0;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
+        coinText.text=coins.ToString();
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        cars[PlayerPrefs.GetInt("selectedCar")].SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-       /* if (!GameManager.instance.gameStarted)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                playing = true;
-            }
-        }
+        coinText.text = coins.ToString();
+        /* if (!GameManager.instance.gameStarted)
+         {
+             if (Input.GetMouseButtonDown(0))
+             {
+                 playing = true;
+             }
+         }
 
-        else if (playing)
-        {
-            CheckInput();
-            Move();
-        }*/
+         else if (playing)
+         {
+             CheckInput();
+             Move();
+         }*/
 
         if (GameManager.instance.gameStarted)
         {
@@ -46,8 +55,14 @@ public class PlayerController : MonoBehaviour
 
         if(transform.position.y <= -2)
         {
-            playing = false;
-            GameManager.instance.GameOver();
+            audioSource.clip = fail;
+            audioSource.Play();
+            if(transform.position.y <= -4)
+            {
+                playing = false;
+                GameManager.instance.GameOver();
+            }
+            
         }
         
     }
@@ -110,8 +125,10 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Coin")
         {
-
+            coins++;
             Destroy(collision.gameObject);
+            audioSource.clip = coin;
+            audioSource.Play();
         }
     }
 
