@@ -23,7 +23,7 @@ public class ChangeCar : MonoBehaviour
         {
             carName.text = "Default";
             //carAnimation.SetTrigger("YellowLeft");
-            //carAnimation.SetTrigger("BlueLeft");
+            carAnimation.SetTrigger("BlueLeft");
             carSource.clip = car1;
             carSource.Play();
             
@@ -42,6 +42,8 @@ public class ChangeCar : MonoBehaviour
             carSource.clip = car3;
             carSource.Play();
         }
+        print(PlayerPrefs.GetInt("selectedCar", 0));
+        print(selectedCar);
     }
     public void previousButton()
     {
