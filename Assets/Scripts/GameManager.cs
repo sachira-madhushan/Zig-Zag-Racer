@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
         SaveHighScore();
         admanager.LoadNonRewardedAd();
         admanager.ShowNonRewardedAd();
+        
         Invoke("ReloadLevel", 1f);
     }
 

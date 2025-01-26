@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
 
@@ -55,14 +56,18 @@ public class PlayerController : MonoBehaviour
 
         if(transform.position.y <= -2)
         {
-            audioSource.clip = fail;
-            audioSource.Play();
-            if(transform.position.y <= -4)
-            {
+            
+            if (transform.position.y <= -4) {
+
                 playing = false;
                 GameManager.instance.GameOver();
             }
             
+        }
+
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Home");
         }
         
     }
@@ -126,6 +131,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Coin")
         {
             coins++;
+            PlayerPrefs.SetInt("Coins", PlayerPrefs.GetInt("Coins", 0) +1);
             Destroy(collision.gameObject);
             audioSource.clip = coin;
             audioSource.Play();
