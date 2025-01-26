@@ -22,8 +22,8 @@ public class ChangeCar : MonoBehaviour
         if (selectedCar == 0)
         {
             carName.text = "Default";
-            carAnimation.SetTrigger("YellowLeft");
-            carAnimation.SetTrigger("BlueLeft");
+            //carAnimation.SetTrigger("YellowLeft");
+            //carAnimation.SetTrigger("BlueLeft");
             carSource.clip = car1;
             carSource.Play();
             
